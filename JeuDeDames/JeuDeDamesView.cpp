@@ -1,4 +1,3 @@
-
 // JeuDeDamesView.cpp : implémentation de la classe CJeuDeDamesView
 //
 
@@ -50,14 +49,30 @@ BOOL CJeuDeDamesView::PreCreateWindow(CREATESTRUCT& cs)
 
 // dessin de CJeuDeDamesView
 
-void CJeuDeDamesView::OnDraw(CDC* /*pDC*/)
+void dessinerPlateau(CDC* pDC, int nb, int taille) 
 {
+	
+	for (int j=1;j<=nb;j++)
+	{
+		for(int i=1;i<=nb;i++)
+		{
+			pDC->Rectangle(taille*i,taille*j,taille*(i+1),taille*(j+1)); 
+		}
+	}
+}
+
+void CJeuDeDamesView::OnDraw(CDC* pDC)
+{
+	int nbrCases = 4; // nombre de cases du plateau par coté 
+	int tailleCases = 80; // taille des cases du plateau
+
 	CJeuDeDamesDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
 
 	// TODO: ajoutez ici le code de dessin pour les données natives
+	dessinerPlateau(pDC, nbrCases, tailleCases);
 }
 
 
