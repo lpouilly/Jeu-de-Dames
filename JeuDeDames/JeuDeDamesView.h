@@ -17,6 +17,7 @@ public:
 
 // Opérations
 public:
+	void creerPlateau(CDC* pDC);
 
 // Substitutions
 public:

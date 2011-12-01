@@ -1,0 +1,38 @@
+﻿La génération a démarré 01/12/2011 14:59:52.
+     1>Projet "C:\Users\Ludovic\Documents\Cours 3A\IHM Windows\Projet\Jeu-de-Dames\JeuDeDames\JeuDeDames.vcxproj" sur le nœud 2 (build cible(s)).
+     1>InitializeBuildStatus:
+         Mise à jour de l'horodatage "Debug\JeuDeDames.unsuccessfulbuild".
+       ClCompile:
+         Toutes les sorties sont à jour.
+         C:\Program Files (x86)\Programmation\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\JeuDeDames.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Case.cpp
+         Case.cpp
+       ResourceCompile:
+         Toutes les sorties sont à jour.
+       ManifestResourceCompile:
+         Toutes les sorties sont à jour.
+       Link:
+         C:\Program Files (x86)\Programmation\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ludovic\Documents\Cours 3A\IHM Windows\Projet\Jeu-de-Dames\Debug\JeuDeDames.exe" /INCREMENTAL /NOLOGO /MANIFEST /ManifestFile:"Debug\JeuDeDames.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Ludovic\Documents\Cours 3A\IHM Windows\Projet\Jeu-de-Dames\Debug\JeuDeDames.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ludovic\Documents\Cours 3A\IHM Windows\Projet\Jeu-de-Dames\Debug\JeuDeDames.lib" /MACHINE:X86 Debug\JeuDeDames.res
+         Debug\JeuDeDames.exe.embed.manifest.res
+         Debug\AlgoEtude.obj
+         Debug\AlgoRegle.obj
+         Debug\Case.obj
+         Debug\JeuDeDames.obj
+         Debug\JeuDeDamesDoc.obj
+         Debug\JeuDeDamesView.obj
+         Debug\MainFrm.obj
+         Debug\Plateau.obj
+         Debug\stdafx.obj
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\JeuDeDames.exe.embed.manifest" /manifest Debug\JeuDeDames.exe.intermediate.manifest "C:\Program Files (x86)\Programmation\Microsoft Visual Studio 10.0\VC\Include\Manifest\dpiaware.manifest"
+         Toutes les sorties sont à jour.
+       LinkEmbedManifest:
+         Toutes les sorties sont à jour.
+         JeuDeDames.vcxproj -> C:\Users\Ludovic\Documents\Cours 3A\IHM Windows\Projet\Jeu-de-Dames\Debug\JeuDeDames.exe
+       FinalizeBuildStatus:
+         Suppression du fichier "Debug\JeuDeDames.unsuccessfulbuild".
+         Mise à jour de l'horodatage "Debug\JeuDeDames.lastbuildstate".
+     1>Génération du projet "C:\Users\Ludovic\Documents\Cours 3A\IHM Windows\Projet\Jeu-de-Dames\JeuDeDames\JeuDeDames.vcxproj" terminée (build cible(s)).
+
+La génération a réussi.
+
+Temps écoulé 00:00:00.65

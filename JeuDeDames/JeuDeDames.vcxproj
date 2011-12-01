@@ -100,19 +100,27 @@
     <None Include="res\JeuDeDamesDoc.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AlgoEtude.h" />
+    <ClInclude Include="AlgoRegle.h" />
+    <ClInclude Include="Case.h" />
     <ClInclude Include="JeuDeDames.h" />
     <ClInclude Include="JeuDeDamesDoc.h" />
     <ClInclude Include="JeuDeDamesView.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="Plateau.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AlgoEtude.cpp" />
+    <ClCompile Include="AlgoRegle.cpp" />
+    <ClCompile Include="Case.cpp" />
     <ClCompile Include="JeuDeDames.cpp" />
     <ClCompile Include="JeuDeDamesDoc.cpp" />
     <ClCompile Include="JeuDeDamesView.cpp" />
     <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="Plateau.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -124,4 +132,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="JeuDeDames.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

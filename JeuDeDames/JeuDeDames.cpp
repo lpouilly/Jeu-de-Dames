@@ -181,6 +181,16 @@ void CJeuDeDamesApp::OnAppAbout()
 	aboutDlg.DoModal();
 }
 
+void CJeuDeDamesApp::setJoueurEnCours( int param1 )
+{
+
+}
+
+int CJeuDeDamesApp::getJoueurEnCours()
+{
+	return 0; //à coder
+}
+
 // gestionnaires de messages pour CJeuDeDamesApp
 
 

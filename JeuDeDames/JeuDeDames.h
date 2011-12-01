@@ -19,6 +19,9 @@ class CJeuDeDamesApp : public CWinApp
 public:
 	CJeuDeDamesApp();
 
+	int getJoueurEnCours();
+	void setJoueurEnCours( int param1 );
+
 
 // Substitutions
 public:
@@ -28,6 +31,7 @@ public:
 // Implémentation
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()
+
 };
 
 extern CJeuDeDamesApp theApp;
