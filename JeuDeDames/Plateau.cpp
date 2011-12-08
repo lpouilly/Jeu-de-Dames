@@ -5,6 +5,8 @@
 #include "JeuDeDames.h"
 #include "Plateau.h"
 
+IMPLEMENT_SERIAL(Plateau, CObject, 1)
+
 // CONSTRUCTEURS / DESTRUCTEUR -----------------------------------------
 Plateau::Plateau(void)
 {
@@ -238,5 +240,52 @@ void Plateau::initialiserPlateau10x10 ()
 	for (int j= 0; j < 5; j++) {
 		tableauDeCases[6][2*j+1].setEtat(NOIR_OC_BLANC);
 		tableauDeCases[8][2*j+1].setEtat(NOIR_OC_BLANC);
+	}
+}
+
+void Plateau::Serialize(CArchive& ar)
+{    
+	if (ar.IsStoring())
+	{
+		CJeuDeDamesApp* app = ((CJeuDeDamesApp* ) AfxGetApp());
+
+		ar << app->getJoueurEnCours();
+		ar << app->getNbPionsBlanc();
+		ar << app->getNbPionsRouge();
+
+		for(int i = 0; i < app->getTaillePlateau(); i++) {
+			for(int j = 0; j < app->getTaillePlateau(); j++)
+			{   		 
+				ar << tableauDeCases[i][j].getEtat();
+			}
+		}
+	}
+
+	else
+	{
+		CJeuDeDamesApp* app = ((CJeuDeDamesApp* ) AfxGetApp());
+
+		int joueur;
+		ar >> joueur;
+		app->setJoueurEnCours(joueur);
+
+		int pionsBlanc;
+		ar >> pionsBlanc;
+		app->setNbPionsBlanc(pionsBlanc);
+
+		int pionsRouge;
+		ar >> pionsRouge;
+		app->setNbPionsRouge(pionsRouge);
+
+		int etat = 0;
+
+		for(int i = 0; i < app->getTaillePlateau(); i++) {
+			for(int j = 0; j < app->getTaillePlateau(); j++)
+			{   			 
+				ar >> etat;
+
+				tableauDeCases[i][j] = Case (etat, i, j);   			 
+			}
+		}
 	}
 }

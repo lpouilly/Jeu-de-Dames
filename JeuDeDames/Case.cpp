@@ -6,8 +6,6 @@
 #include "JeuDeDames.h"
 #include "Case.h"
 
-IMPLEMENT_SERIAL(Case, CObject, 1)
-
 // CONSTRUCTEURS / DESTRUCTEURS ----------------------------------------
 
 Case::Case()
@@ -113,17 +111,6 @@ void Case::dessinerCase(CDC* pDC)
 	image.Detach();
 }
 
-void Case::Serialize(CArchive& ar)
-{
-	if (ar.IsStoring())
-	{
-		ar << ligne << colonne << etat;
-	}
-	else
-	{
-		ar >> ligne >> colonne >> etat;
-	}
-}
 
 
 

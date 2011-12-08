@@ -4,10 +4,12 @@
 
 #define TAILLE 200
 
-class Plateau
+class Plateau : public CObject
 {
 private:
 	Case tableauDeCases [TAILLE][TAILLE];
+
+	DECLARE_SERIAL(Plateau);
 
 public:
 	Plateau(void);
@@ -27,6 +29,8 @@ public:
 	void initialiserPlateau6x6 ();
 	void initialiserPlateau8x8 ();
 	void initialiserPlateau10x10 ();
+
+	void Serialize(CArchive& ar);
 };
 
 

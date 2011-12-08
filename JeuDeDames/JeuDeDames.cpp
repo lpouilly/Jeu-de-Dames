@@ -53,8 +53,6 @@ CJeuDeDamesApp::CJeuDeDamesApp()
 	
 
 	joueurEnCours = 1;
-
-
 	
 }
 

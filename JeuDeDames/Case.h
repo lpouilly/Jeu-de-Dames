@@ -13,7 +13,7 @@
 class Case : public CObject
 {
 private:
-	DECLARE_SERIAL(Case);
+	
 	int etat;
 	int ligne;
 	int colonne;
@@ -38,7 +38,7 @@ public:
 
 	// Utilisateur
 	void dessinerCase (CDC* pDC);
-	void Serialize (CArchive& ar);
+
 	
 };
 
