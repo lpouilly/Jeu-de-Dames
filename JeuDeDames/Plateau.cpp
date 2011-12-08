@@ -5,37 +5,24 @@
 #include "JeuDeDames.h"
 #include "Plateau.h"
 
-// CONSTRUCTEURS ---------------------------------------------------------
-
+// CONSTRUCTEURS / DESTRUCTEUR -----------------------------------------
 Plateau::Plateau(void)
 {
-	for (int k = 0; k < 2; k++) {
-		for (int l = 0; l < 2; l++)
-		{
-			tableauDeCases[2*k][2*l] = Case(BLANC, 2*k, 2*l);
-			//(tableauDeCases[2*k][2*l]).setEtat(BLANC);
-		}
-	}
-	for (int m = 0; m < 2; m++) {
-		for (int n = 0; n < 2; n++)
-		{
-			tableauDeCases[2*m+1][2*n+1] = Case(BLANC, 2*m+1, 2*n+1);
-			//(tableauDeCases[2*k+1][2*l+1]).setEtat(NOIR);
-		}
-	}
-	for (int k = 0; k < 2; k++) {
-		for (int l = 0; l < 2; l++)
-		{
-			tableauDeCases[2*k+1][2*l] = Case(NOIR, 2*k+1, 2*l);
-			//(tableauDeCases[2*k][2*l]).setEtat(BLANC);
-		}
-	}
-	for (int m = 0; m < 2; m++) {
-		for (int n = 0; n < 2; n++)
-		{
-			tableauDeCases[2*m][2*n+1] = Case(NOIR, 2*m, 2*n+1);
-			//(tableauDeCases[2*k+1][2*l+1]).setEtat(NOIR);
-		}
+	
+}
+
+Plateau::Plateau(int taille_plateau)
+{
+	switch (taille_plateau)
+	{
+	case 4:		initialiserPlateau4x4();
+				break;
+	case 6:		initialiserPlateau6x6();
+				break;
+	case 8:		initialiserPlateau8x8();
+				break;
+	case 10:	initialiserPlateau10x10();
+				break;
 	}
 }
 
@@ -44,28 +31,212 @@ Plateau::~Plateau(void)
 }
 
 // ACCESSEURS ---------------------------------------------------------
-int Plateau::getNbCases()
+Case Plateau::getCaseDuTableau(int i, int j)
 {
-	return nbCases;
+	return tableauDeCases[i][j];
+}
+
+void Plateau::setCaseDuTableau (int i, int j, int newEtat)
+{
+	tableauDeCases[i][j].setEtat(newEtat);
 }
 
 // UTILISATEUR ---------------------------------------------------------
-void Plateau::dessinerPlateau(CDC* pDC)
+void Plateau::dessinerPlateau(CDC* pDC, int taillePlateau)
 {
-	for (int i = 0; i < 4; i++){
-		for (int j = 0; j < 4; j++)
+	for (int i = 0; i < taillePlateau; i++){
+		for (int j = 0; j < taillePlateau; j++)
 		{
 			tableauDeCases[i][j].dessinerCase(pDC);
 		}
 	}
 }
 
-Case Plateau::getCaseDuTableau(int ligne, int colonne)
+// INITIALISATION ------------------------------------------------------
+void Plateau::initialiserPlateau4x4()
 {
-	return tableauDeCases[ligne][colonne];
+	// CASES BLANCHES
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < 2; j++)
+		{
+			tableauDeCases[2*i][2*j] = Case(BLANC, 2*i, 2*j);
+		}
+	}
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < 2; j++)
+		{
+			tableauDeCases[2*i+1][2*j+1] = Case(BLANC, 2*i+1, 2*j+1);
+		}
+	}
+
+	// CASES NOIRES
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < 2; j++)
+		{
+			tableauDeCases[2*i+1][2*j] = Case(NOIR, 2*i+1, 2*j);
+		}
+	}
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < 2; j++)
+		{
+			tableauDeCases[2*i][2*j+1] = Case(NOIR, 2*i, 2*j+1);
+		}
+	}
+
+	// CASES OCCUPEES BLANCHES
+	tableauDeCases[0][1] = Case(NOIR_OC_ROUGE, 0, 1);
+	tableauDeCases[0][3] = Case(NOIR_OC_ROUGE, 0, 3);
+
+	// CASES OCCUPEES ROUGES
+	tableauDeCases[3][0] = Case(NOIR_OC_BLANC, 3, 0);
+	tableauDeCases[3][2] = Case(NOIR_OC_BLANC, 3, 2);
 }
 
-void Plateau::setTableauCases(Case unecase, int ligne, int colonne)
+void Plateau::initialiserPlateau6x6 ()
 {
-	tableauDeCases[ligne][colonne] = unecase;
+	// CASES BLANCHES
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++)
+		{
+			tableauDeCases[2*i][2*j] = Case(BLANC, 2*i, 2*j);
+		}
+	}
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++)
+		{
+			tableauDeCases[2*i+1][2*j+1] = Case(BLANC, 2*i+1, 2*j+1);
+		}
+	}
+
+	// CASES NOIRES
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++)
+		{
+			tableauDeCases[2*i+1][2*j] = Case(NOIR, 2*i+1, 2*j);
+		}
+	}
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++)
+		{
+			tableauDeCases[2*i][2*j+1] = Case(NOIR, 2*i, 2*j+1);
+		}
+	}
+
+	// CASES OCCUPEES BLANCHES
+	for (int j= 0; j < 3; j++) {
+		tableauDeCases[0][2*j+1].setEtat(NOIR_OC_ROUGE);
+	}
+	for (int j= 0; j < 3; j++) {
+		tableauDeCases[1][2*j].setEtat(NOIR_OC_ROUGE);
+	}
+
+	// CASES OCCUPEES ROUGES
+	for (int j= 0; j < 3; j++) {
+		tableauDeCases[4][2*j+1].setEtat(NOIR_OC_BLANC);
+	}
+	for (int j= 0; j < 3; j++) {
+		tableauDeCases[5][2*j].setEtat(NOIR_OC_BLANC);
+	}
+}
+
+void Plateau::initialiserPlateau8x8 ()
+{
+	
+	// CASES BLANCHES
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++)
+		{
+			tableauDeCases[2*i][2*j] = Case(BLANC, 2*i, 2*j);
+		}
+	}
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++)
+		{
+			tableauDeCases[2*i+1][2*j+1] = Case(BLANC, 2*i+1, 2*j+1);
+		}
+	}
+
+	// CASES NOIRES
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++)
+		{
+			tableauDeCases[2*i+1][2*j] = Case(NOIR, 2*i+1, 2*j);
+		}
+	}
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++)
+		{
+			tableauDeCases[2*i][2*j+1] = Case(NOIR, 2*i, 2*j+1);
+		}
+	}
+
+	// CASES OCCUPEES BLANCHES
+	for (int j= 0; j < 4; j++) {
+		tableauDeCases[0][2*j+1].setEtat(NOIR_OC_ROUGE);
+		tableauDeCases[2][2*j+1].setEtat(NOIR_OC_ROUGE);
+	}
+	for (int j= 0; j < 4; j++) {
+		tableauDeCases[1][2*j].setEtat(NOIR_OC_ROUGE);
+	}
+
+	// CASES OCCUPEES ROUGES
+	for (int j= 0; j < 4; j++) {
+		tableauDeCases[5][2*j].setEtat(NOIR_OC_BLANC);
+		tableauDeCases[7][2*j].setEtat(NOIR_OC_BLANC);
+	}
+	for (int j= 0; j < 4; j++) {
+		tableauDeCases[6][2*j+1].setEtat(NOIR_OC_BLANC);
+	}
+	
+}
+
+void Plateau::initialiserPlateau10x10 ()
+{
+	// CASES BLANCHES
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++)
+		{
+			tableauDeCases[2*i][2*j] = Case(BLANC, 2*i, 2*j);
+		}
+	}
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++)
+		{
+			tableauDeCases[2*i+1][2*j+1] = Case(BLANC, 2*i+1, 2*j+1);
+		}
+	}
+
+	// CASES NOIRES
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++)
+		{
+			tableauDeCases[2*i+1][2*j] = Case(NOIR, 2*i+1, 2*j);
+		}
+	}
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++)
+		{
+			tableauDeCases[2*i][2*j+1] = Case(NOIR, 2*i, 2*j+1);
+		}
+	}
+
+	// CASES OCCUPEES BLANCHES
+	for (int j= 0; j < 5; j++) {
+		tableauDeCases[0][2*j+1].setEtat(NOIR_OC_ROUGE);
+		tableauDeCases[2][2*j+1].setEtat(NOIR_OC_ROUGE);
+	}
+	for (int j= 0; j < 5; j++) {
+		tableauDeCases[1][2*j].setEtat(NOIR_OC_ROUGE);
+		tableauDeCases[3][2*j].setEtat(NOIR_OC_ROUGE);
+	}
+
+	// CASES OCCUPEES ROUGES
+	for (int j= 0; j < 5; j++) {
+		tableauDeCases[7][2*j].setEtat(NOIR_OC_BLANC);
+		tableauDeCases[9][2*j].setEtat(NOIR_OC_BLANC);
+	}
+	for (int j= 0; j < 5; j++) {
+		tableauDeCases[6][2*j+1].setEtat(NOIR_OC_BLANC);
+		tableauDeCases[8][2*j+1].setEtat(NOIR_OC_BLANC);
+	}
 }

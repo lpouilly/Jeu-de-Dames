@@ -103,6 +103,8 @@
     <ClInclude Include="AlgoEtude.h" />
     <ClInclude Include="AlgoRegle.h" />
     <ClInclude Include="Case.h" />
+    <ClInclude Include="Clic.h" />
+    <ClInclude Include="DlgMenu.h" />
     <ClInclude Include="JeuDeDames.h" />
     <ClInclude Include="JeuDeDamesDoc.h" />
     <ClInclude Include="JeuDeDamesView.h" />
@@ -116,6 +118,8 @@
     <ClCompile Include="AlgoEtude.cpp" />
     <ClCompile Include="AlgoRegle.cpp" />
     <ClCompile Include="Case.cpp" />
+    <ClCompile Include="Clic.cpp" />
+    <ClCompile Include="DlgMenu.cpp" />
     <ClCompile Include="JeuDeDames.cpp" />
     <ClCompile Include="JeuDeDamesDoc.cpp" />
     <ClCompile Include="JeuDeDamesView.cpp" />

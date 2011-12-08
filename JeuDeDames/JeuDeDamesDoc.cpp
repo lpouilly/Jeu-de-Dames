@@ -45,6 +45,7 @@ BOOL CJeuDeDamesDoc::OnNewDocument()
 	// TODO: ajoutez ici le code de réinitialisation
 	// (les documents SDI réutiliseront ce document)
 
+
 	return TRUE;
 }
 
@@ -55,13 +56,28 @@ BOOL CJeuDeDamesDoc::OnNewDocument()
 
 void CJeuDeDamesDoc::Serialize(CArchive& ar)
 {
+	Plateau* plateau = ((CJeuDeDamesApp*) AfxGetApp())->getPlateau();
+	int nbCases = ((CJeuDeDamesApp *)AfxGetApp( ))->getTaillePlateau();
+	
 	if (ar.IsStoring())
 	{
 		// TODO: ajoutez ici le code de stockage
+		for (int i = 0; i < nbCases; i++) {
+			for (int j = 0; j < nbCases; j++) 
+			{
+				plateau->getCaseDuTableau(i, j).Serialize(ar);
+			}
+		}
 	}
 	else
 	{
 		// TODO: ajoutez ici le code de chargement
+		for (int i = 0; i < nbCases; i++) {
+			for (int j = 0; j < nbCases; j++) 
+			{
+				plateau->getCaseDuTableau(i, j).Serialize(ar);
+			}
+		}
 	}
 }
 
@@ -135,3 +151,18 @@ void CJeuDeDamesDoc::Dump(CDumpContext& dc) const
 
 
 // commandes pour CJeuDeDamesDoc
+
+
+void CJeuDeDamesDoc::DeleteContents()
+{
+	// TODO: ajoutez ici votre code spécialisé et/ou l'appel de la classe de base
+	//Plateau* plateau = ((CJeuDeDamesApp*) AfxGetApp())->getPlateau();
+	//plateau->initialiserPlateau6x6();
+
+	CDocument::DeleteContents();
+}
+
+void CJeuDeDamesDoc::OnRepaintAllViews()
+{
+	UpdateAllViews(NULL);
+}

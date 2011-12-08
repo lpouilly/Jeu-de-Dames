@@ -16,8 +16,6 @@ public:
 	CJeuDeDamesDoc* GetDocument() const;
 
 // Opérations
-public:
-	void creerPlateau(CDC* pDC);
 
 // Substitutions
 public:
@@ -27,6 +25,7 @@ protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+
 
 // Implémentation
 public:
@@ -41,6 +40,8 @@ protected:
 // Fonctions générées de la table des messages
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // version debug dans JeuDeDamesView.cpp

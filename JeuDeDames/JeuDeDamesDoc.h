@@ -45,4 +45,7 @@ protected:
 	// Fonction d'assistance qui définit le contenu de recherche pour un gestionnaire de recherche
 	void SetSearchContent(const CString& value);
 #endif // SHARED_HANDLERS
+public:
+	virtual void DeleteContents();
+	void OnRepaintAllViews();
 };

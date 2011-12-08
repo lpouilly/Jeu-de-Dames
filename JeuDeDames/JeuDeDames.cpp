@@ -7,9 +7,11 @@
 #include "afxdialogex.h"
 #include "JeuDeDames.h"
 #include "MainFrm.h"
+#include "DlgMenu.h"
 
 #include "JeuDeDamesDoc.h"
 #include "JeuDeDamesView.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -25,6 +27,7 @@ BEGIN_MESSAGE_MAP(CJeuDeDamesApp, CWinApp)
 	ON_COMMAND(ID_FILE_OPEN, &CWinApp::OnFileOpen)
 	// Commande standard de configuration de l'impression
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinApp::OnFilePrintSetup)
+	ON_COMMAND(ID_GESTIONDESPARTIES_NOUVELLEPARTIE, &CJeuDeDamesApp::OnGestiondespartiesNouvellepartie)
 END_MESSAGE_MAP()
 
 
@@ -47,9 +50,16 @@ CJeuDeDamesApp::CJeuDeDamesApp()
 
 	// TODO: ajoutez ici du code de construction,
 	// Placez toutes les initialisations significatives dans InitInstance
+	
+
+	joueurEnCours = 1;
+
+
+	
 }
 
 // Seul et unique objet CJeuDeDamesApp
+
 
 CJeuDeDamesApp theApp;
 
@@ -58,6 +68,7 @@ CJeuDeDamesApp theApp;
 
 BOOL CJeuDeDamesApp::InitInstance()
 {
+	
 	// InitCommonControlsEx() est requis sur Windows XP si le manifeste de l'application
 	// spécifie l'utilisation de ComCtl32.dll version 6 ou ultérieure pour activer les
 	// styles visuels.  Dans le cas contraire, la création de fenêtres échouera.
@@ -68,7 +79,10 @@ BOOL CJeuDeDamesApp::InitInstance()
 	InitCtrls.dwICC = ICC_WIN95_CLASSES;
 	InitCommonControlsEx(&InitCtrls);
 
+
 	CWinApp::InitInstance();
+
+	
 
 	if (!AfxSocketInit())
 	{
@@ -126,10 +140,13 @@ BOOL CJeuDeDamesApp::InitInstance()
 		return FALSE;
 
 	// La seule fenêtre a été initialisée et peut donc être affichée et mise à jour
+	// m_pMainWnd->EnableScrollBar(SB_BOTH, ESB_ENABLE_BOTH);
+		// Tentative de rajout de scrollbars
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
 	// appelle DragAcceptFiles uniquement s'il y a un suffixe
 	//  Dans une application SDI, cet appel doit avoir lieu juste après ProcessShellCommand
+
 	return TRUE;
 }
 
@@ -181,17 +198,88 @@ void CJeuDeDamesApp::OnAppAbout()
 	aboutDlg.DoModal();
 }
 
-void CJeuDeDamesApp::setJoueurEnCours( int param1 )
+Plateau* CJeuDeDamesApp::getPlateau()
 {
-
+	return plateau;
 }
 
 int CJeuDeDamesApp::getJoueurEnCours()
 {
-	return 0; //à coder
+	return joueurEnCours;
+}
+
+void CJeuDeDamesApp::setJoueurEnCours( int numJoueur )
+{
+	joueurEnCours = numJoueur;
+}
+
+int CJeuDeDamesApp::getTaillePlateau()
+{
+	return taillePlateau;
+}
+
+AlgoEtude* CJeuDeDamesApp::getAlgoEtude()
+{
+	return algoEtude;
+}
+
+AlgoRegle* CJeuDeDamesApp::getAlgoRegle()
+{
+	return algoRegle;
+}
+
+
+int CJeuDeDamesApp::getNbPionsBlanc ()
+{
+	return nbPionsBlanc;
+}
+
+int CJeuDeDamesApp::getNbPionsRouge ()
+{
+	return nbPionsRouge;
+}
+
+void CJeuDeDamesApp::setNbPionsBlanc (int nbPB)
+{
+	nbPionsBlanc = nbPB;
+}
+
+void CJeuDeDamesApp::setNbPionsRouge (int nbPR)
+{
+	nbPionsRouge = nbPR;
 }
 
 // gestionnaires de messages pour CJeuDeDamesApp
 
 
 
+
+void CJeuDeDamesApp::OnGestiondespartiesNouvellepartie()
+{
+
+	CDlgMenu menu;
+	menu.DoModal();
+
+	taillePlateau = menu.cases;
+
+	plateau = new Plateau(taillePlateau);
+	algoEtude =new AlgoEtude;
+	algoRegle =new AlgoRegle;
+
+	switch(taillePlateau) 
+	{
+	case 4:		nbPionsBlanc = 2;
+		nbPionsRouge = 2;
+		break;
+	case 6:		nbPionsBlanc = 6;
+		nbPionsRouge = 6;
+		break;
+	case 8:		nbPionsBlanc = 12;
+		nbPionsRouge = 12;
+		break;
+	case 10:	nbPionsBlanc = 20;
+		nbPionsRouge = 20;
+		break;
+	}
+
+}

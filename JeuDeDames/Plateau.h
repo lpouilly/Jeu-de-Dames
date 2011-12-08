@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include "Case.h"
 
@@ -7,20 +7,26 @@
 class Plateau
 {
 private:
-	int nbCases;
 	Case tableauDeCases [TAILLE][TAILLE];
 
 public:
 	Plateau(void);
+	Plateau(int taillePlateau);
 	~Plateau(void);
 
 	// Accesseurs
 	int getNbCases ();
+	Case getCaseDuTableau (int i, int j);
+	void setCaseDuTableau (int i, int j, int newEtat);
 
 	// Utilisateur
-	Case getCaseDuTableau (int ligne, int colonne);
-	void dessinerPlateau (CDC* pDC);
-	void setTableauCases(Case unecase, int ligne, int colonne);
+	void dessinerPlateau (CDC* pDC, int taillePlateau);
+
+	// Initialisations
+	void initialiserPlateau4x4 ();
+	void initialiserPlateau6x6 ();
+	void initialiserPlateau8x8 ();
+	void initialiserPlateau10x10 ();
 };
 
 

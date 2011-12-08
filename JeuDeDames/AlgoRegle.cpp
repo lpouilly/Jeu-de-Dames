@@ -7,117 +7,193 @@
 
 AlgoRegle::AlgoRegle(void)
 {
+	caseCliquee = Case (BLANC, 0, 0);
+	caseMemoOcDroite = Case (BLANC, 0, 0);
+	caseMemoOcGauche = Case (BLANC, 0, 0);
 }
 
 AlgoRegle::~AlgoRegle(void)
 {
 }
 
-Case AlgoRegle::AlgoADerouler(Case caseCl)
+Case AlgoRegle::getCaseMemoOcDroite()
 {
-	caseCliquee = caseCl;
-	AlgoEtude* algoEtude = new AlgoEtude;
-	Plateau* plateau = new Plateau;
+	return caseMemoOcDroite;
+}
 
-	nbCases = plateau->getNbCases();
-	int JoueurEnCours = ((CJeuDeDamesApp *)AfxGetApp( ))->getJoueurEnCours();
+Case AlgoRegle::getCaseMemoOcGauche()
+{
+	return caseMemoOcGauche;
+}
 
-	for(int i=0;i<nbCases;i++)
-	{
-		for(int j=0;j<nbCases;j++)
+int AlgoRegle::getCptMemoOc()
+{
+	return cptMemoOc;
+}
+
+
+Case AlgoRegle::deroulerAlgo (Case caseClic)
+{
+	// On récupère la case cliquée
+	caseCliquee = caseClic;
+
+	// On récupère le tableau de cases
+	Plateau* plateau = ((CJeuDeDamesApp *)AfxGetApp( ))->getPlateau();
+	int nbCases = ((CJeuDeDamesApp *)AfxGetApp( ))->getTaillePlateau();
+
+	for(int i = 0; i < nbCases; i++) {
+		for(int j = 0; j < nbCases; j++)
 		{
-			tableauDeCases[i][j] = algoEtude->getCaseDuTableauTemp(i,j);
+			tableauDeCases[i][j] = plateau->getCaseDuTableau(i,j);
+		} 
+	}
+
+	// On récupère le joueur en cours
+	int joueurEnCours = ((CJeuDeDamesApp *)AfxGetApp( ))->getJoueurEnCours();
+
+	// On applique l'algo spécifique au joueur
+	if (joueurEnCours == 1) AlgoADeroulerJoueurBlanc(nbCases);
+	if (joueurEnCours == 2) AlgoADeroulerJoueurRouge(nbCases);
+
+	// On met à jour le plateau
+	for(int i = 0; i < nbCases; i++) {
+		for(int j = 0; j < nbCases; j++)
+		{
+			plateau->setCaseDuTableau(i, j, tableauDeCases[i][j].getEtat());
 		}
 	}
 
-	if (JoueurEnCours == 1) AlgoADeroulerJoueurBlanc();
-	if (JoueurEnCours == 2) AlgoADeroulerJoueurRouge();
-
-	for(int k=nbCases;k<nbCases;k++)
-	{
-		for(int l=nbCases;l<nbCases;l++)
-		{
-			plateau->setTableauCases(tableauDeCases[k][l],k,l);
-		}
-	}	
 	return caseMemo;
 }
 
-void AlgoRegle::AlgoADeroulerJoueurBlanc()
+
+void AlgoRegle::AlgoADeroulerJoueurBlanc(int nbCases)
 {
-	Case* caseCliquee = new Case();
-	int ligneVoulue = caseCliquee->getLigne() - 1;
-	//Deux candidats sont crés !!!
-	int colonneVoulueGauche = caseCliquee->getColonne() + 1;
-	int colonneVoulueDroite = caseCliquee->getColonne() - 1;
-	caseCliquee->setEtat(NOIR_OC_BLANC);
+	cptMemoOc = 0;
+
+	// On cherche les deux cases candidates au mouvement
+	int ligneVoulue = caseCliquee.getLigne() - 1;
+
+	int colonneVoulueGauche = caseCliquee.getColonne() - 1;
+	int colonneVoulueDroite = caseCliquee.getColonne() + 1;
 
 	// On étudie pour le candidat de droite
-	if (verificationCaseDuPlateau(nbCases,ligneVoulue,colonneVoulueDroite) == true) //on regarde si la case candidate de droite est sur le plateau
+	// On vérifie qu'il soit dans le plateau
+	if (verificationCaseDuPlateau(nbCases, ligneVoulue, colonneVoulueDroite) == true)
 	{
 		Case caseAVerif1 = tableauDeCases[ligneVoulue][colonneVoulueDroite];
-		if (verificationTypeCase(caseAVerif1) == NOIR) //on regarde si la case est libre
+
+		// CAS où la case est libre
+		if (caseAVerif1.getEtat() == NOIR)
 		{
 			tableauDeCases[ligneVoulue][colonneVoulueDroite].setEtat(NOIR_SEL);
-			caseMemo = *caseCliquee;
+			caseMemo = caseCliquee;
 		}
 
-		else
+		// CAS où la case est occupée par un pion rouge
+		if (caseAVerif1.getEtat() == NOIR_OC_ROUGE)
 		{
-			//il faudra gerer le cas ou on saute un pion
+			// On regarde si la case suivante est libre
+			if (tableauDeCases[ligneVoulue - 1][colonneVoulueDroite + 1].getEtat() == NOIR)
+			{
+				tableauDeCases[ligneVoulue - 1][colonneVoulueDroite + 1].setEtat(NOIR_SEL);
+				caseMemo = caseCliquee;
+				caseMemoOcDroite = tableauDeCases[ligneVoulue][colonneVoulueDroite];
+				cptMemoOc += 1; 
+			}
 		}
 	}
 
 	// On étudie pour le candidat de gauche
-	if (verificationCaseDuPlateau(nbCases,ligneVoulue,colonneVoulueGauche) == true)
+	// On vérifie qu'il soit dans le plateau
+	if (verificationCaseDuPlateau(nbCases, ligneVoulue, colonneVoulueGauche) == true)
 	{
 		Case caseAVerif2 = tableauDeCases[ligneVoulue][colonneVoulueGauche];
-		if (verificationTypeCase(caseAVerif2) == NOIR)
+
+		// CAS où la case est libre
+		if (caseAVerif2.getEtat() == NOIR)
 		{
 			tableauDeCases[ligneVoulue][colonneVoulueGauche].setEtat(NOIR_SEL);
-			caseMemo = *caseCliquee;
+			caseMemo = caseCliquee;
 		}
 
-		else
+		// CAS où la case est occupée par un pion rouge
+		if (caseAVerif2.getEtat() == NOIR_OC_ROUGE)
 		{
-			//il faudra gerer le cas ou on saute un pion
+			// On regarde si la case suivante est libre
+			if (tableauDeCases[ligneVoulue - 1][colonneVoulueGauche - 1].getEtat() == NOIR)
+			{
+				tableauDeCases[ligneVoulue - 1][colonneVoulueGauche - 1].setEtat(NOIR_SEL);
+				caseMemo = caseCliquee;
+				caseMemoOcGauche = tableauDeCases[ligneVoulue][colonneVoulueGauche];
+				cptMemoOc += 2;
+			}
 		}
 	}
 }
 
-void AlgoRegle::AlgoADeroulerJoueurRouge()
-{
-	int ligneVoulue = caseCliquee.getLigne() - 1;
-	int colonneVoulueGauche = caseCliquee.getColonne() + 1;
-	int colonneVoulueDroite = caseCliquee.getColonne() - 1;
 
-	if (verificationCaseDuPlateau(nbCases,ligneVoulue,colonneVoulueDroite) == true) //on regarde si la case candidate de droite est sur le plateau
+void AlgoRegle::AlgoADeroulerJoueurRouge(int nbCases)
+{
+	cptMemoOc = 0;
+
+	// On cherche les deux cases candidates au mouvement
+	int ligneVoulue = caseCliquee.getLigne() + 1;
+
+	int colonneVoulueGauche = caseCliquee.getColonne() - 1;
+	int colonneVoulueDroite = caseCliquee.getColonne() + 1;
+
+	// On étudie pour le candidat de droite
+	// On vérifie qu'il soit dans le plateau
+	if (verificationCaseDuPlateau(nbCases, ligneVoulue, colonneVoulueDroite) == true)
 	{
 		Case caseAVerif1 = tableauDeCases[ligneVoulue][colonneVoulueDroite];
-		if (verificationTypeCase(caseAVerif1) == NOIR) //on regarde si la case est libre
+
+		// CAS où la case est libre
+		if (caseAVerif1.getEtat() == NOIR)
 		{
-			tableauDeCases[TAILLE][TAILLE].setEtat(NOIR_SEL);
+			tableauDeCases[ligneVoulue][colonneVoulueDroite].setEtat(NOIR_SEL);
 			caseMemo = caseCliquee;
 		}
 
-		else
+		// CAS où la case est occupée par un pion blanc
+		if (caseAVerif1.getEtat() == NOIR_OC_BLANC)
 		{
-			//il faudra gerer le cas ou on saute un pion
+			// On regarde si la case suivante est libre
+			if (tableauDeCases[ligneVoulue + 1][colonneVoulueDroite + 1].getEtat() == NOIR)
+			{
+				tableauDeCases[ligneVoulue + 1][colonneVoulueDroite + 1].setEtat(NOIR_SEL);
+				caseMemo = caseCliquee;
+				caseMemoOcDroite = tableauDeCases[ligneVoulue][colonneVoulueDroite];
+				cptMemoOc += 1;
+			}
 		}
 	}
 
+	// On étudie pour le candidat de gauche
+	// On vérifie qu'il soit dans le plateau
 	if (verificationCaseDuPlateau(nbCases,ligneVoulue,colonneVoulueGauche) == true)
 	{
 		Case caseAVerif2 = tableauDeCases[ligneVoulue][colonneVoulueGauche];
-		if (verificationTypeCase(caseAVerif2) == NOIR)
+
+		// CAS où la case est libre
+		if (caseAVerif2.getEtat() == NOIR)
 		{
-			tableauDeCases[nbCases][nbCases].setEtat(NOIR_SEL);
+			tableauDeCases[ligneVoulue][colonneVoulueGauche].setEtat(NOIR_SEL);
 			caseMemo = caseCliquee;
 		}
 
-		else
+		// CAS où la case est occupée par un pion blanc
+		if (caseAVerif2.getEtat() == NOIR_OC_BLANC)
 		{
-			//il faudra gerer le cas ou on saute un pion
+			// On regarde si la case suivante est libre
+			if (tableauDeCases[ligneVoulue + 1][colonneVoulueGauche - 1].getEtat() == NOIR)
+			{
+				tableauDeCases[ligneVoulue + 1][colonneVoulueGauche - 1].setEtat(NOIR_SEL);
+				caseMemo = caseCliquee;
+				caseMemoOcGauche = tableauDeCases[ligneVoulue][colonneVoulueGauche];
+				cptMemoOc += 2;
+			}
 		}
 	}
 }
@@ -131,23 +207,5 @@ bool AlgoRegle::verificationCaseDuPlateau( int nbCases, int ligneVoulue, int col
 	else
 	{
 		return false;
-	}
-}
-
-int AlgoRegle::verificationTypeCase(Case CaseAVerifier)
-{
-	switch(CaseAVerifier.getEtat())
-	{
-		case NOIR: return NOIR;
-		break;
-
-		case NOIR_OC_BLANC : return NOIR_OC_BLANC;
-		break;
-
-		case NOIR_OC_ROUGE : return NOIR_OC_ROUGE;
-		break;
-
-		default: return -1;
-		break;
 	}
 }

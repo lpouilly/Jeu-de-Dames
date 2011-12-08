@@ -1,11 +1,11 @@
-﻿La génération a démarré 01/12/2011 14:59:52.
+﻿La génération a démarré 08/12/2011 16:46:17.
      1>Projet "C:\Users\Ludovic\Documents\Cours 3A\IHM Windows\Projet\Jeu-de-Dames\JeuDeDames\JeuDeDames.vcxproj" sur le nœud 2 (build cible(s)).
      1>InitializeBuildStatus:
          Mise à jour de l'horodatage "Debug\JeuDeDames.unsuccessfulbuild".
        ClCompile:
          Toutes les sorties sont à jour.
-         C:\Program Files (x86)\Programmation\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\JeuDeDames.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Case.cpp
-         Case.cpp
+         C:\Program Files (x86)\Programmation\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\JeuDeDames.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt JeuDeDames.cpp
+         JeuDeDames.cpp
        ResourceCompile:
          Toutes les sorties sont à jour.
        ManifestResourceCompile:
@@ -16,6 +16,8 @@
          Debug\AlgoEtude.obj
          Debug\AlgoRegle.obj
          Debug\Case.obj
+         Debug\Clic.obj
+         Debug\DlgMenu.obj
          Debug\JeuDeDames.obj
          Debug\JeuDeDamesDoc.obj
          Debug\JeuDeDamesView.obj
@@ -35,4 +37,4 @@
 
 La génération a réussi.
 
-Temps écoulé 00:00:00.65
+Temps écoulé 00:00:00.53

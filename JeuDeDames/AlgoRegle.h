@@ -9,16 +9,20 @@ class AlgoRegle
 public:
 	AlgoRegle(void);
 	~AlgoRegle(void);
-	Case AlgoADerouler(Case caseCliquee);
-	void AlgoADeroulerJoueurBlanc();
-	void AlgoADeroulerJoueurRouge();
+	Case deroulerAlgo (Case caseCliquee);
+	void AlgoADeroulerJoueurBlanc(int nbCases);
+	void AlgoADeroulerJoueurRouge(int nbCases);
 	bool verificationCaseDuPlateau( int nbCases, int ligneVoulue, int colonneVoulue );
-	int verificationTypeCase(Case CaseAVerifier );
+	Case getCaseMemoOcDroite ();
+	Case getCaseMemoOcGauche ();
+	int getCptMemoOc ();
 
 private:
 	Case caseCliquee; 
 	Case caseMemo;
+	Case caseMemoOcDroite;
+	Case caseMemoOcGauche;
+	int cptMemoOc;
 	Case tableauDeCases[TAILLE][TAILLE];
-	int nbCases;
 
 };

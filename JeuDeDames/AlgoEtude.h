@@ -1,6 +1,7 @@
 #pragma once
 #include "Case.h"
 #include "Plateau.h"
+#include "AlgoRegle.h"
 
 #define TAILLE 200
 
@@ -10,11 +11,10 @@ class AlgoEtude
 public:
 	AlgoEtude(void);
 	~AlgoEtude(void);
-	AlgoEtude(Case caseCliquee);
-	Case getCaseDuTableauTemp (int ligne, int colonne);
-	void setTableauCases(Case unecase, int ligne, int colonne);
+	void appliquerAlgoEtude (Case caseCliquee);
+	void testCaseOc (Case caseCliquee, AlgoRegle* algoRegle, Plateau* plateau);
+
 private:
-	int nbCases;
 	Case caseMemo;
 	Case tableauDeCases[TAILLE][TAILLE];
 

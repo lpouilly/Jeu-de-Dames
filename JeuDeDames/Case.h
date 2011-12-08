@@ -10,27 +10,36 @@
 
 #define LARGEUR_CASE 50
 
-class Case
+class Case : public CObject
 {
 private:
+	DECLARE_SERIAL(Case);
 	int etat;
 	int ligne;
 	int colonne;
 	CImage image;
 
 public:
-	Case(void);
+	Case();
 	Case(int monEtat, int maLigne, int maColonne);
 	~Case(void);
+	Case(const Case &rCase);
+	const Case& operator=(const Case& Src);
+
+	void CopyFrom(const Case & Src );
 
 	// Accesseurs
 	int getEtat ();
 	int getLigne ();
 	int getColonne ();
 	void setEtat (int monEtat);
+	void setLigne( int maLigne );
+	void setColonne( int maColonne );
 
 	// Utilisateur
 	void dessinerCase (CDC* pDC);
+	void Serialize (CArchive& ar);
+	
 };
 
 
